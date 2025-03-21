@@ -1,4 +1,4 @@
-# 🍕 Pazistore – Your Ultimate Pizza Ordering Experience  
+# 🍕 PaziStore – Your Ultimate Pizza Ordering Experience  
 
 Welcome to **Pazistore**! A modern, feature-rich Java web application that makes ordering pizza easier than ever.  
 Whether you're a customer craving a delicious slice or an admin managing the store, Pazistore has you covered!  
