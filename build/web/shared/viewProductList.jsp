@@ -12,7 +12,15 @@
     <body>
         <div class="container my-5">
             <h2 class="text-center mb-4">Welcome to PAZI Pizza Shop</h2>
+            <c:if test="${sessionScope.acc.isStaff == true}">
+                <div class="d-flex justify-content-end mb-5">
+                    <a class="btn btn-primary" href="${pageContext.request.contextPath}/staff/create">
+                        Add Product
+                    </a>
+                </div>
+            </c:if>
             <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+
                 <c:if test="${empty productList}">
                     <p class="col text-center text-primary">No products available</p>
                 </c:if>

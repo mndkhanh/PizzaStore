@@ -61,13 +61,16 @@
                             </button>
                         </form>
 
-                        <form action="${pageContext.request.contextPath}/priceSearch" method="post" class="d-flex price-search-bar mx-auto">
-                            <input class="form-control me-2" type="text" name="min" value="${min}" placeholder="Min" >
-                            <input class="form-control me-2" type="text" name="max" value="${max}" placeholder="Max" >
-                            <button class="btn btn-outline-light" type="submit">
-                                <i class="fas fa-search"></i>
-                            </button>
-                        </form>
+                        <c:if test="${sessionScope.acc.isStaff != true}">
+                            <form action="${pageContext.request.contextPath}/priceSearch" method="post" class="d-flex price-search-bar mx-auto">
+                                <input class="form-control me-2" type="text" name="min" value="${min}" placeholder="Min" >
+                                <input class="form-control me-2" type="text" name="max" value="${max}" placeholder="Max" >
+                                <button class="btn btn-outline-light" type="submit">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </form>
+                        </c:if>
+
 
                         <!-- Account Greeting, Cart, and Login/Logout -->
                         <ul class="navbar-nav ms-auto">
@@ -79,8 +82,8 @@
                                     <a class="nav-link" href="${pageContext.request.contextPath}/view">Products</a>
                                 </li>
                             </c:if>
-                                
-                                <c:if test="${sessionScope.acc.isStaff == true}">
+
+                            <c:if test="${sessionScope.acc.isStaff == true}">
                                 <li>
                                     <a class="nav-link" href="${pageContext.request.contextPath}/view">Dashboard</a>
                                 </li>
@@ -110,10 +113,8 @@
                                 </li>
                             </c:if>
                             <c:if test="${sessionScope.acc.isStaff == true}">
-                                <li class="nav-item">
-                                    <a class="nav-link" href="${pageContext.request.contextPath}/staff/create">
-                                        Add Product
-                                    </a>
+                                <li>
+                                    <a class="nav-link" href="${pageContext.request.contextPath}/staff/ordermanagement">Orders</a>
                                 </li>
                             </c:if>
 

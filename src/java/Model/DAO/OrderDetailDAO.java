@@ -83,6 +83,29 @@ public class OrderDetailDAO {
         return result;
     }
 
+    public HashMap<Integer, ArrayList<OrderDetail>> getAllOrderDetails() throws Exception {
+        cnn = new DBContext().getConnection();
+        String sql = "select * from orderDetail";
+        ps = cnn.prepareStatement(sql);
+        rs = ps.executeQuery();
+        HashMap<Integer, ArrayList<OrderDetail>> list = new HashMap<>();
+        
+        while (rs.next()) {
+            String pid = rs.getString("ProductID");
+            int oid = rs.getInt("OrderID");
+            int quantity = rs.getInt("Quantity");
+            OrderDetail orderDetail = new OrderDetail(oid, pid, quantity);
+            if(list.containsKey(oid)) {
+                list.get(oid).add(orderDetail);
+            } else {
+                list.put(oid, new ArrayList<>());
+                list.get(oid).add(orderDetail);
+            }
+        }
+        closeResources();
+        return list;
+    }
+
     public boolean updateOrderDetail(OrderDetail detail) throws Exception {
         cnn = new DBContext().getConnection();
         String sql = "UPDATE OrderDetail SET quantity = ? WHERE orderID = ? AND productID = ?";
@@ -108,7 +131,9 @@ public class OrderDetailDAO {
         return success;
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
+        System.out.println(new OrderDetailDAO().getAllOrderDetails());
     }
 
 }
+
