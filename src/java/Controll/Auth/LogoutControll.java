@@ -2,7 +2,6 @@ package Controll.Auth;
 
 import Model.DAO.OrderDAO;
 import Model.DTO.Account;
-import Model.DTO.Order;
 import Model.DTO.OrderDetail;
 import java.io.IOException;
 import java.util.HashMap;
@@ -23,13 +22,17 @@ public class LogoutControll extends HttpServlet {
             HttpSession session = request.getSession(false);
             if (session != null) {
                 HashMap<String, OrderDetail> cart = (HashMap<String, OrderDetail>) session.getAttribute("cart");
+                log("2");
                 Account account = (Account) session.getAttribute("acc");
+                log("4");
                 new OrderDAO().synchronizeCart(account.getAccID(), cart);
+                log("5");
                 session.invalidate();
             }
             response.sendRedirect(request.getContextPath() + "/home");
         } catch (Exception ex) {
             log(ex.getMessage());
+            log("hello from ex");
             response.sendRedirect(request.getContextPath() + "/home");
         }
 

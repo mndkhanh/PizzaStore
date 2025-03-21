@@ -89,6 +89,8 @@
                 List<HashMap<String, OrderDetail>> historyOrders = (List<HashMap<String, OrderDetail>>) request.getAttribute("historyOrders");
                 if (historyOrders != null) {
                     for (HashMap<String, OrderDetail> historyOrder : historyOrders) {
+                        OrderDetail firstOrderDetail = historyOrder.values().iterator().next();
+                        int orderID = firstOrderDetail.getOrderID();
             %>
             <table class="table table-striped text-center">
                 <thead class="table-dark">
@@ -113,16 +115,20 @@
                         <td><%= order.getQuantity()%></td>
                         <td>$<fmt:formatNumber value="<%= product.getUnitPrice() * order.getQuantity()%>" type="number" minFractionDigits="2"/></td>
                     </tr>
-                    <%
-                        }
-                    } else {
-                    %>
+                    <% } %>
+
+                    <% } else { %>
                     <tr>
                         <td colspan="5">No past orders found.</td>
                     </tr>
-                    <% } %>
+                    <% }%>
                 </tbody>
             </table>
+            <div class="d-flex justify-content-end gap-3">
+                <a href="${pageContext.request.contextPath}/user/reorder?oid=<%= orderID%>" class="btn btn-warning" onclick="return confirm('Are you sure to re-order this order, this will merge with the existing cart')">Re-order</a>
+                <a href="${pageContext.request.contextPath}/user/vieworder?oid=<%= orderID%>" class="btn btn-info">View Order</a>
+            </div>
+
             <% }
                 }%>
         </div>

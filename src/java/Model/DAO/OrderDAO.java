@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class OrderDAO {
 
@@ -83,7 +84,7 @@ public class OrderDAO {
         ps = cnn.prepareStatement(sql);
         ps.setString(1, accountID);
         rs = ps.executeQuery();
-        List<HashMap<String,OrderDetail>> list = new ArrayList<>();
+        List<HashMap<String, OrderDetail>> list = new ArrayList<>();
         if (rs.next()) {
             list.add(new OrderDetailDAO().getOrderDetailsByOrderID(rs.getInt("orderID")));
         }
@@ -238,10 +239,6 @@ public class OrderDAO {
         return orderID;
     }
 
-    public static void main(String[] args) throws Exception {
-        System.out.println(new OrderDAO().getHistoryListByAccountID("fdsa"));
-    }
-
     public boolean updateOrderDetails(int orderID, HashMap<String, OrderDetail> orderDetails) throws Exception {
         new OrderDetailDAO().deleteAllOrderDetails(orderID);
         OrderDetailDAO orderDetailDAO = new OrderDetailDAO();
@@ -286,6 +283,24 @@ public class OrderDAO {
         boolean result = ps.executeUpdate() > 0;
         closeResources();
         return result;
+    }
+
+    public HashMap<String, OrderDetail> getAfterReOrderList(String accountID, int oid) throws Exception {
+        HashMap<String, OrderDetail> eventualList = new OrderDAO().getOrderDetailsOfUnpaidOrderOfAccountID(accountID);
+        HashMap<String, OrderDetail> mergedList = new OrderDetailDAO().getOrderDetailsByOrderID(oid);
+
+        for (Map.Entry<String, OrderDetail> entry : mergedList.entrySet()) {
+            String productID = entry.getKey();
+            OrderDetail newOrder = entry.getValue();
+
+            if (eventualList.containsKey(productID)) {
+                OrderDetail existingOrder = eventualList.get(productID);
+                existingOrder.setQuantity(existingOrder.getQuantity() + newOrder.getQuantity());
+            } else {
+                eventualList.put(productID, newOrder);
+            }
+        }
+        return eventualList;
     }
 
 }

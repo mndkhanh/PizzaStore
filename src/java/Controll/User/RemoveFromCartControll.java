@@ -1,5 +1,7 @@
 package Controll.User;
 
+import Model.DAO.OrderDAO;
+import Model.DTO.Account;
 import Model.DTO.OrderDetail;
 import java.io.IOException;
 import java.util.HashMap;
@@ -16,9 +18,13 @@ public class RemoveFromCartControll extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
+        try {
+            HttpSession session = request.getSession();
         HashMap<String, OrderDetail> cart = (HashMap<String, OrderDetail>) session.getAttribute("cart");
-
+        Account acc = (Account) session.getAttribute("acc");
+        String accountID = acc.getAccID();
+        
+        new OrderDAO().synchronizeCart(accountID, cart);
         if (cart != null) {
             String productID = request.getParameter("pid");
 
@@ -29,5 +35,8 @@ public class RemoveFromCartControll extends HttpServlet {
         }
 
         response.sendRedirect(request.getHeader("Referer")); 
+        } catch(Exception ex) {
+            
+        }
     }
 }

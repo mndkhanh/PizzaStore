@@ -108,7 +108,7 @@
 
 
 
-            <div style="margin-top: 100px;">
+            <div style="margin-top: 500px;">
                 <%@include file="shared/footer.jsp" %>
             </div>
 
