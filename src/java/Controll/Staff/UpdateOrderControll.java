@@ -76,7 +76,6 @@ public class UpdateOrderControll extends HttpServlet {
                 request.getRequestDispatcher("/error.jsp").forward(request, response);
             }
             Order o = new OrderDAO().getOrderByID(oid);
-            log("3");
             double totalCost = new OrderDAO().getTotalCost(oid);
 
             request.setAttribute("freight", o.getFreight());

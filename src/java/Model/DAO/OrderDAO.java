@@ -268,7 +268,7 @@ public class OrderDAO {
     }
 
     public boolean updateOrderStatus(int orderID, String status) throws Exception {
-        if (!status.equals("PAID") && !status.equals("UNPAID") && !status.equals("SUCCESS")) {
+        if (!status.equals("PAID") && !status.equals("UNPAID") && !status.equals("SUCCESS") && !status.equals("FAILED")) {
             return false;
         }
         cnn = new DBContext().getConnection();

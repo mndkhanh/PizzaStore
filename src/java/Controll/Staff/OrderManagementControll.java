@@ -22,7 +22,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -37,9 +36,7 @@ public class OrderManagementControll extends HttpServlet {
         try {
             HashMap<Integer, ArrayList<OrderDetail>> orders = new OrderDetailDAO().getAllOrderDetails();
             log(orders.toString());
-
             request.setAttribute("orders", orders);
-
             request.getRequestDispatcher("/order-management.jsp").forward(request, response);
         } catch (Exception ex) {
             log(ex.getMessage());

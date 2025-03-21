@@ -7,7 +7,6 @@ package Controll.Staff;
 
 import Model.DAO.OrderDAO;
 import Model.DAO.OrderDetailDAO;
-import Model.DTO.Account;
 import Model.DTO.Order;
 import Model.DTO.OrderDetail;
 import java.io.IOException;
@@ -24,7 +23,7 @@ import javax.servlet.http.HttpSession;
  * @author mndkh
  */
 @WebServlet(name = "ViewOrderDetail", urlPatterns = {"/staff/vieworder"})
-public class ViewOrderDetailControll extends HttpServlet {
+public class StaffViewOrderDetailControll extends HttpServlet {
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -39,8 +38,9 @@ public class ViewOrderDetailControll extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
+            
+            log("staff view order is running");
             HttpSession session = request.getSession();
-            Account account = (Account) session.getAttribute("acc");
             int oid = Integer.parseInt(request.getParameter("oid"));
             // Fetch order details from database
             OrderDAO orderDAO = new OrderDAO();

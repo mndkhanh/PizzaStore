@@ -83,8 +83,11 @@
                     </div>
                 </div>
                 <div class="text-center mt-4">
-                    <button type="submit" class="btn btn-save">Save Changes</button>
+                    <button type="submit" class="btn btn-save btn-primary">Save Changes</button>
                 </div>
+                <c:if test="${not empty success}">
+                    <p class="text-success">${success}</p>
+                </c:if>
             </form>
         </div>
         <div style="margin-top: 500px">

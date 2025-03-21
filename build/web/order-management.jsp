@@ -55,12 +55,14 @@
                 font-size: 10px; /* Giảm kích thước chữ của nút */
                 padding: 2px 6px; /* Thu nhỏ nút */
             }
-
+            .row-info {
+                font-size: 10px; /* Giảm kích thước chữ của nút */
+            }
         </style>
     </head>
     <body>
         <%@include file="shared/header.jsp" %>
-        <h2 class="text-center mt-5">Order History</h2>
+        <h2 class="text-center mt-5">Orders Management</h2>
         <div class="container mt-4">
             <%
                 HashMap<Integer, ArrayList<OrderDetail>> orders = (HashMap<Integer, ArrayList<OrderDetail>>) request.getAttribute("orders");
@@ -114,7 +116,7 @@
             </table>
 
             <!-- Account & Shipping Info -->
-            <div class="mb-5 d-flex justify-content-between">
+            <div class="row-info mb-5 d-flex justify-content-between">
                 <p><strong>Account ID:</strong> <%= account.getAccID()%></p>
                 <p><strong>Name:</strong> <%= account.getFullName()%></p>
                 <p><strong>Deliver to:</strong> <%= orderInfo.getShipAddress()%></p>
