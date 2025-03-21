@@ -92,7 +92,7 @@
                         OrderDetail firstOrderDetail = historyOrder.values().iterator().next();
                         int orderID = firstOrderDetail.getOrderID();
             %>
-            <table class="table table-striped text-center">
+            <table class="table table-striped text-center mt-3">
                 <thead class="table-dark">
                     <tr>
                         <th>Image</th>
@@ -125,8 +125,8 @@
                 </tbody>
             </table>
             <div class="d-flex justify-content-end gap-3">
-                <a href="${pageContext.request.contextPath}/user/reorder?oid=<%= orderID%>" class="btn btn-warning" onclick="return confirm('Are you sure to re-order this order, this will merge with the existing cart')">Re-order</a>
-                <a href="${pageContext.request.contextPath}/user/vieworder?oid=<%= orderID%>" class="btn btn-info">View Order</a>
+                <a href="${pageContext.request.contextPath}/user/reorder?oid=<%= orderID%>" class="btn btn-primary" onclick="return confirm('Are you sure to re-order this order, this will merge with the existing cart')">Re-order</a>
+                <a href="${pageContext.request.contextPath}/user/vieworder?oid=<%= orderID%>" class="btn btn-primary">View Order</a>
             </div>
 
             <% }

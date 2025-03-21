@@ -1,7 +1,8 @@
 package Controll.User;
 
+import Model.DAO.OrderDAO;
+import Model.DTO.Account;
 import Model.DTO.OrderDetail;
-import Model.DTO.Product;
 import java.io.IOException;
 import java.util.HashMap;
 import javax.servlet.ServletException;
@@ -17,25 +18,32 @@ public class DecreaseInCartControll extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        HashMap<String, OrderDetail> cart = (HashMap<String, OrderDetail>) session.getAttribute("cart");
+        try {
+            HttpSession session = request.getSession();
+            HashMap<String, OrderDetail> cart = (HashMap<String, OrderDetail>) session.getAttribute("cart");
+            Account account = (Account) session.getAttribute("acc");
+            String accountID = account.getAccID();
 
-        if (cart != null) {
-            String productID = request.getParameter("pid");
+            if (cart != null) {
+                String productID = request.getParameter("pid");
 
-            if (productID != null && cart.containsKey(productID)) {
-                OrderDetail detail = cart.get(productID);
-                int newQuantity = detail.getQuantity() - 1;
+                if (productID != null && cart.containsKey(productID)) {
+                    OrderDetail detail = cart.get(productID);
+                    int newQuantity = detail.getQuantity() - 1;
 
-                if (newQuantity > 0) {
-                    detail.setQuantity(newQuantity);
-                } else {
-                    cart.remove(productID); 
+                    if (newQuantity > 0) {
+                        detail.setQuantity(newQuantity);
+                    } else {
+                        cart.remove(productID);
+                    }
+                    session.setAttribute("cart", cart);
+                    new OrderDAO().synchronizeCart(accountID, cart);
                 }
-                session.setAttribute("cart", cart);
             }
-        }
 
-        response.sendRedirect(request.getHeader("Referer")); 
+            response.sendRedirect(request.getHeader("Referer"));
+        } catch (Exception ex) {
+
+        }
     }
 }

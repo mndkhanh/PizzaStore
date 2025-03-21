@@ -1,6 +1,8 @@
 package Controll.User;
 
+import Model.DAO.OrderDAO;
 import Model.DAO.ProductDAO;
+import Model.DTO.Account;
 import Model.DTO.OrderDetail;
 import Model.DTO.Product;
 import java.io.IOException;
@@ -20,6 +22,8 @@ public class AddToCartControll extends HttpServlet {
             throws ServletException, IOException {
         try {
             HttpSession session = request.getSession();
+            Account account =(Account) session.getAttribute("acc");
+            String accountID = account.getAccID();
             HashMap<String, OrderDetail> cart = (HashMap<String, OrderDetail>) session.getAttribute("cart");
 
             if (cart == null) {
@@ -45,6 +49,7 @@ public class AddToCartControll extends HttpServlet {
             }
 
             session.setAttribute("cart", cart);
+            new OrderDAO().synchronizeCart(accountID, cart);
             response.sendRedirect(request.getHeader("Referer"));
         } catch (Exception ex) {
             request.setAttribute("error", "An unexpected error occurred.");

@@ -56,6 +56,7 @@ public class ViewCartControll extends HttpServlet {
             request.setAttribute("totalAmount", totalAmount);
 
             List<HashMap<String, OrderDetail>> historyOrders = (List<HashMap<String, OrderDetail>>) new OrderDAO().getHistoryListByAccountID(account.getAccID());
+            log(historyOrders.toString());
 
             request.setAttribute("historyOrders", historyOrders);
 

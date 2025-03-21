@@ -85,11 +85,15 @@ public class OrderDAO {
         ps.setString(1, accountID);
         rs = ps.executeQuery();
         List<HashMap<String, OrderDetail>> list = new ArrayList<>();
-        if (rs.next()) {
+        while (rs.next()) {
             list.add(new OrderDetailDAO().getOrderDetailsByOrderID(rs.getInt("orderID")));
         }
         closeResources();
         return list;
+    }
+    
+    public static void main(String[] args) throws Exception {
+        System.out.println(new OrderDAO().getHistoryListByAccountID("fdsa").toString());
     }
 
     public HashMap<String, OrderDetail> getOrderDetailsOfUnpaidOrderOfAccountID(String accountID) throws Exception {

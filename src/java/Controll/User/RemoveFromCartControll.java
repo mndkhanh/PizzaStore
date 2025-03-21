@@ -24,12 +24,13 @@ public class RemoveFromCartControll extends HttpServlet {
         Account acc = (Account) session.getAttribute("acc");
         String accountID = acc.getAccID();
         
-        new OrderDAO().synchronizeCart(accountID, cart);
+        
         if (cart != null) {
             String productID = request.getParameter("pid");
 
             if (productID != null && cart.containsKey(productID)) {
                 cart.remove(productID);
+                new OrderDAO().synchronizeCart(accountID, cart);
                 session.setAttribute("cart", cart);
             }
         }
