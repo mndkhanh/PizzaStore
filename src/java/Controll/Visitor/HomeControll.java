@@ -29,12 +29,11 @@ public class HomeControll extends HttpServlet {
         try {
             ProductDAO dao = new ProductDAO();
             List<Product> productList = dao.getProductList();
-            log(productList.toString());
 
             request.setAttribute("productList", productList);
             request.getRequestDispatcher("home.jsp").forward(request, response);
         } catch (Exception ex) {
-
+            log(ex.getMessage());
         }
 
     }

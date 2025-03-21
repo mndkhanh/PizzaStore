@@ -1,21 +1,37 @@
 package Controll.Staff;
 
-import Model.DAO.MobileDAO;
+import Model.DAO.CategoryDAO;
+import Model.DAO.ProductDAO;
+import Model.DAO.SupplierDAO;
+import Model.DTO.Category;
 import Model.DTO.Product;
+import Model.DTO.Supplier;
 import java.io.IOException;
 import java.sql.Date;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet(name = "CreateControll", urlPatterns = {"/staff/create"})
+@WebServlet(name = "CreateProductControll", urlPatterns = {"/staff/create"})
 public class CreateControll extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        try {
+            SupplierDAO supDAO = new SupplierDAO();
+            CategoryDAO catDAO = new CategoryDAO();
+            List<Category> categories = catDAO.getCategoryList();
+            List<Supplier> suppliers = supDAO.getSupplierList();
+
+            request.setAttribute("categories", categories);
+            request.setAttribute("suppliers", suppliers);
+        } catch (Exception e) {
+            request.setAttribute("error", "An error occurred while loading categories and suppliers.");
+        }
         request.getRequestDispatcher("/create.jsp").forward(request, response);
     }
 
@@ -23,61 +39,56 @@ public class CreateControll extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            String mobileID = request.getParameter("mobileID");
-            String mobileName = request.getParameter("mobileName");
-            String description = request.getParameter("description");
-            
-            String priceString = request.getParameter("price");
-            double price = 0.0;
-            if (priceString != null && !priceString.isEmpty()) {
+            SupplierDAO supDAO = new SupplierDAO();
+            CategoryDAO catDAO = new CategoryDAO();
+            List<Category> categories = catDAO.getCategoryList();
+            List<Supplier> suppliers = supDAO.getSupplierList();
+
+            request.setAttribute("categories", categories);
+            request.setAttribute("suppliers", suppliers);
+
+            String productID = request.getParameter("productID");
+            String productName = request.getParameter("productName");
+            String supplierID = request.getParameter("supplierID");
+            String categoryID = request.getParameter("categoryID");
+            String quantityPerUnit = request.getParameter("quantityPerUnit");
+            String img = request.getParameter("img");
+
+            String unitPriceString = request.getParameter("unitPrice");
+            double unitPrice = 0.0;
+            if (unitPriceString != null && !unitPriceString.isEmpty()) {
                 try {
-                    price = Double.parseDouble(priceString);
+                    unitPrice = Double.parseDouble(unitPriceString);
                 } catch (NumberFormatException e) {
                     request.setAttribute("error", "Invalid price format");
                     request.getRequestDispatcher("/error.jsp").forward(request, response);
                     return;
                 }
             }
-            
-            String productionDateString = request.getParameter("productionDate");
-            Date productionDate = null;
-            if (productionDateString != null && !productionDateString.trim().isEmpty()) {
-                try {
-                    productionDate = Date.valueOf(productionDateString);
-                } catch (IllegalArgumentException e) {
-                    request.setAttribute("error", "Invalid date format.");
-                    request.getRequestDispatcher("/error.jsp").forward(request, response);
-                    return;
-                }
-            } else {
-                request.setAttribute("error", "Production Date is required.");
-                request.getRequestDispatcher("/error.jsp").forward(request, response);
-                return;
-            }
-            
-            int quantity = Integer.parseInt(request.getParameter("quantity"));
-            boolean onSale = Boolean.parseBoolean(request.getParameter("onSale"));
-            String img = request.getParameter("img");
 
-            Product newMobile = new Product(mobileID, description, price, mobileName, productionDate, quantity, onSale, img);
-            MobileDAO mobileDAO = new MobileDAO();
-            boolean success = mobileDAO.createMobile(newMobile);
+            Product newProduct = new Product(productID, productName, supplierID, categoryID, quantityPerUnit, unitPrice, img);
+            ProductDAO productDAO = new ProductDAO();
+            boolean success = productDAO.createProduct(newProduct);
+            log(success ? "ok" : "not ok");
 
             if (success) {
-                response.sendRedirect(request.getContextPath() + "/staff/create?success=Created successfully");
+                log("run here");
+                request.setAttribute("success", "Created successfully");
+                request.getRequestDispatcher("/create.jsp").forward(request, response);
             } else {
-                request.setAttribute("error", "Failed to create new mobile.");
+                log("run here");
+                request.setAttribute("error", "Failed to create new product.");
                 request.getRequestDispatcher("/error.jsp").forward(request, response);
             }
         } catch (Exception e) {
-            e.printStackTrace();
-            request.setAttribute("error", "An error occurred while creating the mobile.");
+            request.setAttribute("error", "An error occurred while creating the product.");
             request.getRequestDispatcher("/error.jsp").forward(request, response);
+            log(e.getMessage());
         }
     }
 
     @Override
     public String getServletInfo() {
-        return "Create Mobile details servlet";
+        return "Create Product details servlet";
     }
 }

@@ -1,6 +1,11 @@
 package Controll.Auth;
 
+import Model.DAO.OrderDAO;
+import Model.DTO.Account;
+import Model.DTO.Order;
+import Model.DTO.OrderDetail;
 import java.io.IOException;
+import java.util.HashMap;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -14,11 +19,20 @@ public class LogoutControll extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession(false);
-        if (session != null) {
-            session.invalidate();
+        try {
+            HttpSession session = request.getSession(false);
+            if (session != null) {
+                HashMap<String, OrderDetail> cart = (HashMap<String, OrderDetail>) session.getAttribute("cart");
+                Account account = (Account) session.getAttribute("acc");
+                new OrderDAO().synchronizeCart(account.getAccID(), cart);
+                session.invalidate();
+            }
+            response.sendRedirect(request.getContextPath() + "/home");
+        } catch (Exception ex) {
+            log(ex.getMessage());
+            response.sendRedirect(request.getContextPath() + "/home");
         }
-        response.sendRedirect(request.getContextPath() + "/home");
+
     }
 
     @Override

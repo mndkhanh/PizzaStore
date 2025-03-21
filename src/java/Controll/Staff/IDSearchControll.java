@@ -1,6 +1,6 @@
 package Controll.Staff;
 
-import Model.DAO.MobileDAO;
+import Model.DAO.ProductDAO;
 import Model.DTO.Product;
 import java.io.IOException;
 import java.util.List;
@@ -18,17 +18,14 @@ public class IDSearchControll extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
 
         try {
-            String id = request.getParameter("id");
+            String pid = request.getParameter("pid");
 
-            MobileDAO mobileDAO = new MobileDAO();
-            List<Product> list = mobileDAO.searchMobileByID(id);
-            request.setAttribute("id", id);
+            ProductDAO dao = new ProductDAO();
+            List<Product> list = dao.searchProductByID(pid);
+            request.setAttribute("pid", pid);
+            log(list.toString());
 
-            if (list == null) {
-                request.setAttribute("error", "Not found!");
-            } else {
-                request.setAttribute("mobileList", list);
-            }
+            request.setAttribute("productList", list);
 
             request.getRequestDispatcher("/view.jsp").forward(request, response);
         } catch (NumberFormatException e) {

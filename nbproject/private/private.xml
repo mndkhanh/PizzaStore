@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/D:/CODE/java/JavaWeb/ASM_PizzaStore/src/java/Model/DTO/Product.java</file>
+            <file>file:/D:/CODE/java/JavaWeb/ASM_PizzaStore/src/java/Controll/Visitor/PriceSearchControll.java</file>
+            <file>file:/D:/CODE/java/JavaWeb/ASM_PizzaStore/web/update.jsp</file>
+            <file>file:/D:/CODE/java/JavaWeb/ASM_PizzaStore/src/java/DB/Context/DBContext.java</file>
+            <file>file:/D:/CODE/java/JavaWeb/ASM_PizzaStore/src/java/Model/DTO/Supplier.java</file>
+            <file>file:/D:/CODE/java/JavaWeb/ASM_PizzaStore/src/java/Model/DAO/CategoryDAO.java</file>
+            <file>file:/D:/CODE/java/JavaWeb/ASM_PizzaStore/web/cart.jsp</file>
+            <file>file:/D:/CODE/java/JavaWeb/ASM_PizzaStore/src/java/Controll/Visitor/DetailControl.java</file>
+            <file>file:/D:/CODE/java/JavaWeb/ASM_PizzaStore/src/java/Controll/Staff/UpdateControll.java</file>
+            <file>file:/D:/CODE/java/JavaWeb/ASM_PizzaStore/web/index.html</file>
+            <file>file:/D:/CODE/java/JavaWeb/ASM_PizzaStore/src/java/Controll/Visitor/HomeControll.java</file>
+            <file>file:/D:/CODE/java/JavaWeb/ASM_PizzaStore/web/shared/footer.jsp</file>
+            <file>file:/D:/CODE/java/JavaWeb/ASM_PizzaStore/web/search.jsp</file>
+            <file>file:/D:/CODE/java/JavaWeb/ASM_PizzaStore/src/java/Controll/Staff/IDSearchControll.java</file>
+            <file>file:/D:/CODE/java/JavaWeb/ASM_PizzaStore/src/java/Controll/Visitor/ViewAllControll.java</file>
+            <file>file:/D:/CODE/java/JavaWeb/ASM_PizzaStore/web/detail.jsp</file>
+            <file>file:/D:/CODE/java/JavaWeb/ASM_PizzaStore/web/META-INF/context.xml</file>
+            <file>file:/D:/CODE/java/JavaWeb/ASM_PizzaStore/web/shared/header.jsp</file>
+            <file>file:/D:/CODE/java/JavaWeb/ASM_PizzaStore/src/java/Controll/User/DecreaseInCartControll.java</file>
+            <file>file:/D:/CODE/java/JavaWeb/ASM_PizzaStore/web/shared/viewProductList.jsp</file>
+            <file>file:/D:/CODE/java/JavaWeb/ASM_PizzaStore/web/view.jsp</file>
+            <file>file:/D:/CODE/java/JavaWeb/ASM_PizzaStore/src/java/Controll/Auth/SignUpControll.java</file>
+            <file>file:/D:/CODE/java/JavaWeb/ASM_PizzaStore/web/asset/hero-img-1.jpg</file>
+            <file>file:/D:/CODE/java/JavaWeb/ASM_PizzaStore/src/java/Controll/Visitor/NameSearchControll.java</file>
+            <file>file:/D:/CODE/java/JavaWeb/ASM_PizzaStore/src/java/Model/DTO/Category.java</file>
+            <file>file:/D:/CODE/java/JavaWeb/ASM_PizzaStore/src/java/Model/DAO/SupplierDAO.java</file>
+            <file>file:/D:/CODE/java/JavaWeb/ASM_PizzaStore/src/java/Model/DAO/ProductDAO.java</file>
+            <file>file:/D:/CODE/java/JavaWeb/ASM_PizzaStore/web/home.jsp</file>
+            <file>file:/D:/CODE/java/JavaWeb/ASM_PizzaStore/web/error.jsp</file>
+            <file>file:/D:/CODE/java/JavaWeb/ASM_PizzaStore/src/java/Controll/Staff/DeleteControll.java</file>
+            <file>file:/D:/CODE/java/JavaWeb/ASM_PizzaStore/src/java/Model/DAO/AccountDAO.java</file>
+            <file>file:/D:/CODE/java/JavaWeb/ASM_PizzaStore/web/WEB-INF/web.xml</file>
+            <file>file:/D:/CODE/java/JavaWeb/ASM_PizzaStore/web/shared/hero.jsp</file>
+            <file>file:/D:/CODE/java/JavaWeb/ASM_PizzaStore/src/java/Controll/Auth/AuthFilter.java</file>
+            <file>file:/D:/CODE/java/JavaWeb/ASM_PizzaStore/src/java/Model/DTO/Account.java</file>
+        </group>
+    </open-files>
+</project-private>

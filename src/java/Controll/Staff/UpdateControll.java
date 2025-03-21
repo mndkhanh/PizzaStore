@@ -22,9 +22,6 @@ public class UpdateControll extends HttpServlet {
             throws ServletException, IOException {
         try {
             String productID = request.getParameter("pid");
-            
-            log(productID);
-
             ProductDAO productDAO = new ProductDAO();
             SupplierDAO supDAO = new SupplierDAO();
             CategoryDAO catDAO = new CategoryDAO();
@@ -37,7 +34,7 @@ public class UpdateControll extends HttpServlet {
                 request.setAttribute("product", product);
                 request.setAttribute("categories", categories);
                 request.setAttribute("suppliers", suppliers);
-                request.getRequestDispatcher("/update.jsp").forward(request, response);
+                request.getRequestDispatcher("/update.jsp?pid=" + productID).forward(request, response);
             } else {
                 response.sendRedirect(request.getContextPath() + "/error.jsp");
             }
@@ -51,7 +48,6 @@ public class UpdateControll extends HttpServlet {
             throws ServletException, IOException {
         try {
             String productID = request.getParameter("productID");
-            log(productID);
             String productName = request.getParameter("productName");
             String supplierID = request.getParameter("supplierID");
             String categoryID = request.getParameter("categoryID");
@@ -62,14 +58,26 @@ public class UpdateControll extends HttpServlet {
             Product updatedProduct = new Product(productID, productName, supplierID, categoryID, quantityPerUnit, unitPrice, img);
 
             ProductDAO productDAO = new ProductDAO();
-            boolean success = productDAO.updateProduct(updatedProduct);
+            SupplierDAO supDAO = new SupplierDAO();
+            CategoryDAO catDAO = new CategoryDAO();
 
+            Product product = productDAO.getProductByID(productID);
+            List<Category> categories = catDAO.getCategoryList();
+            List<Supplier> suppliers = supDAO.getSupplierList();
+            
+            request.setAttribute("product", product);
+            request.setAttribute("categories", categories);
+            request.setAttribute("suppliers", suppliers);
+
+            boolean success = productDAO.updateProduct(updatedProduct);
             if (success) {
                 request.setAttribute("success", "Updated successfully");
+                request.getRequestDispatcher("/update.jsp").forward(request, response);
+            } else {
+                request.setAttribute("error", "An error occurred while updating the product.");
+                request.getRequestDispatcher("/error.jsp").forward(request, response);
             }
-            request.getRequestDispatcher("/update.jsp").forward(request, response);
         } catch (Exception e) {
-            e.printStackTrace();
             request.setAttribute("error", "An error occurred while updating the product.");
             request.getRequestDispatcher("/error.jsp").forward(request, response);
         }

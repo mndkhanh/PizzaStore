@@ -10,7 +10,6 @@ import Model.DTO.Product;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,6 +54,34 @@ public class ProductDAO {
         }
         closeResources();
         return null;
+    }
+
+    public boolean createProduct(Product p) throws Exception {
+        cnn = new DBContext().getConnection();
+        String sql = "INSERT INTO Product (productID, productName, supplierID, categoryID, quantityPerUnit, unitPrice, ProductImage) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        ps = cnn.prepareStatement(sql);
+
+        ps.setString(1, p.getProductID());
+        ps.setString(2, p.getProductName());
+        ps.setString(3, p.getSupplierID());
+        ps.setString(4, p.getCategoryID());
+        ps.setString(5, p.getQuantityPerUnit());
+        ps.setDouble(6, p.getUnitPrice());
+        ps.setString(7, p.getImg());
+
+        int rowsAffected = ps.executeUpdate();
+        closeResources();
+        return rowsAffected > 0;
+    }
+
+    public boolean deleteProductByID(String id) throws Exception {
+        cnn = new DBContext().getConnection();
+        String sql = "delete from Product WHERE ProductID = ?";
+        ps = cnn.prepareStatement(sql);
+        ps.setString(1, id);
+        int rowsAffected = ps.executeUpdate();
+        closeResources();
+        return rowsAffected > 0;
     }
 
     public List<Product> getProductList() throws Exception {

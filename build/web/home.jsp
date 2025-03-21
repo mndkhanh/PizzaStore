@@ -11,7 +11,7 @@
     </head>
     <body class="bg-light">
 
-        <%@include file="shared/header.jsp" %>
+        <div class="fixed-top"><%@include file="shared/header.jsp" %></div>>
         <%@include file="shared/hero.jsp" %>
         <%@include file="shared/viewProductList.jsp" %>
         <%@include file="shared/footer.jsp" %>

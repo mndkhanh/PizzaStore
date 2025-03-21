@@ -36,7 +36,7 @@
                     Product product = (Product) request.getAttribute("product");
                     if (product != null) {
                 %>
-                <form action="<%= request.getContextPath()%>/staff/update" method="post">
+                <form action="<%= request.getContextPath()%>/staff/updatez" method="post">
                     <div class="row">
                         <!-- Image Section -->
                         <div class="col-md-6 d-flex flex-column align-items-center">
@@ -68,7 +68,7 @@
                                 <select name="supplierID" class="form-control">
                                     <c:forEach var="supplier" items="${suppliers}">
                                         <option value="${supplier.getSupplierID()}" <c:if test="${supplier.getSupplierID() eq product.getSupplierID()}">selected</c:if>>
-                                            ${supplier.getSupplierName()}
+                                            ${supplier.getCompanyName()}
                                         </option>
                                     </c:forEach>
                                 </select>

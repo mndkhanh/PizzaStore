@@ -6,9 +6,10 @@
 package Controll.Auth;
 
 import Model.DAO.AccountDAO;
+import Model.DAO.OrderDAO;
+import Model.DAO.OrderDetailDAO;
 import Model.DTO.Account;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -35,7 +36,10 @@ public class LoginControll extends HttpServlet {
             if (acc != null) {
                 HttpSession session = request.getSession();
                 session.setAttribute("acc", acc);
-                session.setMaxInactiveInterval(60);
+                // acc is user then load the unpaid order up to "cart" in session scope
+                if (!acc.isIsStaff()) {
+                    session.setAttribute("cart", new OrderDAO().getOrderDetailsOfUnpaidOrderOfAccountID(accID));
+                }
                 response.sendRedirect("view");
             } else {
                 request.setAttribute("error", "user or password not correct");

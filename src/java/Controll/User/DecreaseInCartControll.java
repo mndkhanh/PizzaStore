@@ -1,5 +1,6 @@
 package Controll.User;
 
+import Model.DTO.OrderDetail;
 import Model.DTO.Product;
 import java.io.IOException;
 import java.util.HashMap;
@@ -17,19 +18,19 @@ public class DecreaseInCartControll extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        HashMap<String, Product> cart = (HashMap<String, Product>) session.getAttribute("cart");
+        HashMap<String, OrderDetail> cart = (HashMap<String, OrderDetail>) session.getAttribute("cart");
 
         if (cart != null) {
-            String mobileID = request.getParameter("id");
+            String productID = request.getParameter("pid");
 
-            if (mobileID != null && cart.containsKey(mobileID)) {
-                Product mobile = cart.get(mobileID);
-                int newQuantity = mobile.getQuantity() - 1;
+            if (productID != null && cart.containsKey(productID)) {
+                OrderDetail detail = cart.get(productID);
+                int newQuantity = detail.getQuantity() - 1;
 
                 if (newQuantity > 0) {
-                    mobile.setQuantity(newQuantity);
+                    detail.setQuantity(newQuantity);
                 } else {
-                    cart.remove(mobileID); 
+                    cart.remove(productID); 
                 }
                 session.setAttribute("cart", cart);
             }

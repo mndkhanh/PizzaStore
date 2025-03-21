@@ -23,6 +23,23 @@ public class AccountDAO {
             cnn.close();
         }
     }
+    
+    public Account getAccountByID(String accID) throws Exception {
+        cnn = new DBContext().getConnection();
+        String sql = "SELECT * FROM Account WHERE AccountID = ?";
+        ps = cnn.prepareStatement(sql);
+        ps.setString(1, accID);
+        rs = ps.executeQuery();
+        if (rs.next()) {
+            String fullName = rs.getString("FullName");
+            String password = rs.getString("password");
+            boolean isStaff = rs.getBoolean("isStaff");
+            closeResources();
+            return new Account(accID, password, fullName, isStaff);
+        }
+        closeResources();
+        return null;
+    }
 
     public Account login(String accID, String password) throws Exception {
         cnn = new DBContext().getConnection();

@@ -46,7 +46,7 @@
                         <!-- Search Bar -->
                         <c:if test="${sessionScope.acc.isStaff == true}">
                             <form action="${pageContext.request.contextPath}/staff/idSearch" method="post" class="d-flex id-search-bar mx-auto">
-                                <input class="form-control me-2 w-100" type="search" name="id" value="${id}" placeholder="Mobile ID" aria-label="Search">
+                                <input class="form-control me-2 w-100" type="search" name="pid" value="${pid}" placeholder="Product ID" aria-label="Search">
                                 <button class="btn btn-outline-light" type="submit">
                                     <i class="fas fa-search"></i>
                                 </button>
@@ -103,7 +103,7 @@
                             </c:choose>
                             <c:if test="${sessionScope.acc.isStaff != true}">
                                 <li class="nav-item">
-                                    <a class="nav-link" href="${pageContext.request.contextPath}/cart.jsp">
+                                    <a class="nav-link" href="${pageContext.request.contextPath}/user/viewcart">
                                         <i class="fas fa-shopping-cart"></i> Cart
                                         <span class="badge bg-danger">${sessionScope.cartSize}</span>
                                     </a>
