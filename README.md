@@ -16,7 +16,7 @@ Whether you're a customer craving a delicious slice or an admin managing the sto
 
 ## 📸 Sneak Peek  
 
-![Pazistore Preview]((https://img.freepik.com/free-vector/pizza-restaurant-concept-illustration_114360-13505.jpg))
+![Pazistore Preview](https://img.freepik.com/free-vector/pizza-restaurant-concept-illustration_114360-13505.jpg)
 
 ---
 
