@@ -5,6 +5,7 @@ import Model.DTO.Account;
 import Model.DTO.Order;
 import Model.DTO.OrderDetail;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -91,7 +92,7 @@ public class OrderDAO {
         closeResources();
         return list;
     }
-    
+
     public static void main(String[] args) throws Exception {
         System.out.println(new OrderDAO().getHistoryListByAccountID("fdsa").toString());
     }
@@ -123,7 +124,9 @@ public class OrderDAO {
     }
 
     public boolean createOrder(Order order, HashMap<String, OrderDetail> orderDetails) throws Exception {
-        if (orderDetails == null || orderDetails.isEmpty()) return true; 
+        if (orderDetails == null || orderDetails.isEmpty()) {
+            return true;
+        }
         String accountID = order.getAccountID();
         String shipAddress = order.getShipAddress();
 
@@ -277,8 +280,6 @@ public class OrderDAO {
         closeResources();
         return result;
     }
-    
-    
 
     public boolean updateOrderShipAddress(int orderID, String shipAddress) throws Exception {
         cnn = new DBContext().getConnection();
@@ -307,6 +308,18 @@ public class OrderDAO {
             }
         }
         return eventualList;
+    }
+
+    public boolean updateOrderShippedDate(int oid, Date shippedDate) throws Exception {
+        cnn = new DBContext().getConnection();
+        String sql = "UPDATE Orders SET shippedDate = ? WHERE orderID = ?";
+        ps = cnn.prepareStatement(sql);
+        ps.setDate(1, shippedDate);
+        ps.setInt(2, oid);
+        boolean result = ps.executeUpdate() > 0;
+        closeResources();
+        return result;
+
     }
 
 }

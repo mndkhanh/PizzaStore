@@ -65,6 +65,8 @@
                         <h4 class="text-primary">Total Cost $${totalCost}</h4>
                         <p class="text-primary">Ship to:</p>
                         <input class="form-control w-auto border-dark" style="min-width: 300px;" type="text" value="${shipAddress}" name="shipAddress" placeholder="Address..." aria-label="Shipping Address">
+                        <p class="text-primary">Shipped Date:</p>
+                        <input class="form-control w-auto border-dark" style="min-width: 300px;" type="date" value="${shippedDate}" name="shippedDate" placeholder="Shipped Date..." aria-label="Shipped Date">
                     </div>
                     <div>
 

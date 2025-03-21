@@ -11,6 +11,7 @@ import Model.DTO.Order;
 import Model.DTO.OrderDetail;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Date;
 import java.util.HashMap;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -41,6 +42,7 @@ public class UpdateOrderControll extends HttpServlet {
             request.setAttribute("freight", o.getFreight());
             request.setAttribute("totalCost", totalCost);
             request.setAttribute("shipAddress", o.getShipAddress());
+            request.setAttribute("shippedDate", o.getShippedDate());
             request.setAttribute("order", list);
 
             request.getRequestDispatcher("/update-order.jsp").forward(request, response);
@@ -56,13 +58,13 @@ public class UpdateOrderControll extends HttpServlet {
         try {
             int oid = Integer.parseInt(request.getParameter("oid"));
             String shipAddress = request.getParameter("shipAddress");
+            Date shippedDate = Date.valueOf(request.getParameter("shippedDate"));
             log(shipAddress);
             String status = request.getParameter("status");
             log(status);
             new OrderDAO().updateOrderShipAddress(oid, shipAddress);
-            log("1");
             new OrderDAO().updateOrderStatus(oid, status);
-            log("2");
+            new OrderDAO().updateOrderShippedDate(oid, shippedDate);
             request.setAttribute("shipAddress", shipAddress);
             request.setAttribute("status", status);
             request.setAttribute("success", "Updated successfully");
@@ -80,6 +82,7 @@ public class UpdateOrderControll extends HttpServlet {
             request.setAttribute("freight", o.getFreight());
             request.setAttribute("totalCost", totalCost);
             request.setAttribute("shipAddress", o.getShipAddress());
+            request.setAttribute("shippedDate", o.getShippedDate());
             request.setAttribute("order", list);
 
             request.getRequestDispatcher("/update-order.jsp").forward(request, response);
