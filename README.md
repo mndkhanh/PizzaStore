@@ -1,4 +1,5 @@
 🍕 Pazistore – Your Ultimate Pizza Ordering Experience
+
 Welcome to Pazistore! A modern, feature-rich Java web application that makes ordering pizza easier than ever. Whether you're a customer craving a delicious slice or an admin managing the store, Pazistore has you covered!
 
 🚀 Features
@@ -6,6 +7,7 @@ Welcome to Pazistore! A modern, feature-rich Java web application that makes ord
 ✅ Seamless Ordering & Order History – Place orders and track past purchases effortlessly.
 ✅ Product Management – Admins can add, edit, and remove pizzas, beverages, and more.
 ✅ Real-Time Order Status – Uses a polling method to update payment and delivery status dynamically.
+
 
 📸 Sneak Peek
 
