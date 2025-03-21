@@ -123,7 +123,7 @@ public class OrderDAO {
     }
 
     public boolean createOrder(Order order, HashMap<String, OrderDetail> orderDetails) throws Exception {
-
+        if (orderDetails == null || orderDetails.isEmpty()) return true; 
         String accountID = order.getAccountID();
         String shipAddress = order.getShipAddress();
 
@@ -134,7 +134,7 @@ public class OrderDAO {
         }
 
         cnn = new DBContext().getConnection();
-        String sql = "INSERT INTO Orders (accountID, shipAddress) VALUES (?, ?)";
+        String sql = "INSERT INTO Orders (accountID, shipAddress) VALUEs (?, ?)";
         ps = cnn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
         ps.setString(1, accountID);
         ps.setString(2, shipAddress);

@@ -39,7 +39,7 @@
             <div class="container">
                 <nav class="navbar navbar-expand-lg navbar-dark">
                     <!-- Logo -->
-                    <a class="navbar-brand" href="home">PAZI STORE</a>
+                    <a class="navbar-brand" href="${pageContext.request.contextPath}/home">PAZI STORE</a>
 
                     <!-- Navbar items -->
                     <div class="collapse navbar-collapse" id="navbarNav">

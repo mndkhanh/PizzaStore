@@ -52,9 +52,10 @@ public class OrderDetailDAO {
         return orderDetails;
     }
 
-    
-
     public boolean createOrderDetails(int orderID, HashMap<String, OrderDetail> orderDetails) throws Exception {
+        if (orderDetails == null || orderDetails.isEmpty()) {
+            return true;
+        }
         cnn = new DBContext().getConnection();
         StringBuilder sql = new StringBuilder("INSERT INTO OrderDetail (orderID, productID, quantity) VALUES ");
         boolean first = true;

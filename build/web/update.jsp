@@ -36,7 +36,7 @@
                     Product product = (Product) request.getAttribute("product");
                     if (product != null) {
                 %>
-                <form action="<%= request.getContextPath()%>/staff/updatez" method="post">
+                <form action="<%= request.getContextPath()%>/staff/update" method="post">
                     <div class="row">
                         <!-- Image Section -->
                         <div class="col-md-6 d-flex flex-column align-items-center">

@@ -65,7 +65,7 @@ public class UpdateControll extends HttpServlet {
             List<Category> categories = catDAO.getCategoryList();
             List<Supplier> suppliers = supDAO.getSupplierList();
             
-            request.setAttribute("product", product);
+            request.setAttribute("product", updatedProduct);
             request.setAttribute("categories", categories);
             request.setAttribute("suppliers", suppliers);
 
