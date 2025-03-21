@@ -9,6 +9,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -91,10 +92,6 @@ public class OrderDAO {
         }
         closeResources();
         return list;
-    }
-
-    public static void main(String[] args) throws Exception {
-        System.out.println(new OrderDAO().getHistoryListByAccountID("fdsa").toString());
     }
 
     public HashMap<String, OrderDetail> getOrderDetailsOfUnpaidOrderOfAccountID(String accountID) throws Exception {
@@ -320,6 +317,39 @@ public class OrderDAO {
         closeResources();
         return result;
 
+    }
+
+    public List<Order> getAllSuccessOrders(Date startDate, Date endDate) throws Exception {
+        cnn = new DBContext().getConnection();
+        String sql = "SELECT * FROM Orders \n"
+                + "WHERE LOWER(status) = 'success' \n"
+                + "AND shippedDate IS NOT NULL \n"
+                + "AND shippedDate BETWEEN ? AND ? \n"
+                + "ORDER BY shippedDate DESC;";
+        ps = cnn.prepareStatement(sql);
+        ps.setDate(1, startDate);
+        ps.setDate(2, endDate);
+        rs = ps.executeQuery();
+        List<Order> list = new ArrayList<>();
+        while (rs.next()) {
+            Order order = new Order(rs.getInt("orderID"),
+                    rs.getString("accountID"),
+                    rs.getDate("orderDate"),
+                    rs.getDate("shippedDate"),
+                    rs.getDouble("freight"),
+                    rs.getString("shipAddress"),
+                    rs.getString("status"));
+            list.add(order);
+        }
+        closeResources();
+        return list;
+    }
+
+    public static void main(String[] args) throws Exception {
+        Date startDate = Date.valueOf(LocalDate.of(0001, 1, 1)); // Giá trị nhỏ nhất hợp lệ
+        Date endDate = Date.valueOf(LocalDate.of(9999, 12, 31)); // Giới hạn theo SQL Server
+
+        System.out.println(new OrderDAO().getAllSuccessOrders(startDate, endDate));
     }
 
 }

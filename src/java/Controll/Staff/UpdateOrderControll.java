@@ -32,13 +32,23 @@ public class UpdateOrderControll extends HttpServlet {
         try {
             int oid = Integer.parseInt(request.getParameter("oid"));
             HashMap<String, OrderDetail> list = new OrderDetailDAO().getOrderDetailsByOrderID(oid);
+
             if (list == null || list.isEmpty()) {
-                request.setAttribute("error", "list null or empty");
+                request.setAttribute("error", "Order details not found.");
                 request.getRequestDispatcher("/error.jsp").forward(request, response);
+                return;
             }
+
             Order o = new OrderDAO().getOrderByID(oid);
+            if (o == null) {
+                request.setAttribute("error", "Order not found.");
+                request.getRequestDispatcher("/error.jsp").forward(request, response);
+                return;
+            }
+
             double totalCost = new OrderDAO().getTotalCost(oid);
 
+            request.setAttribute("status", o.getStatus());
             request.setAttribute("freight", o.getFreight());
             request.setAttribute("totalCost", totalCost);
             request.setAttribute("shipAddress", o.getShipAddress());
@@ -46,9 +56,14 @@ public class UpdateOrderControll extends HttpServlet {
             request.setAttribute("order", list);
 
             request.getRequestDispatcher("/update-order.jsp").forward(request, response);
+        } catch (NumberFormatException e) {
+            log("Invalid order ID format: " + e.getMessage());
+            request.setAttribute("error", "Unexpected error");
+            request.getRequestDispatcher("/error.jsp").forward(request, response);
         } catch (Exception ex) {
-            log(ex.getMessage());
-
+            log("Error in doGet: " + ex.getMessage());
+            request.setAttribute("error", "Unexpected error");
+            request.getRequestDispatcher("/error.jsp").forward(request, response);
         }
     }
 
@@ -58,42 +73,61 @@ public class UpdateOrderControll extends HttpServlet {
         try {
             int oid = Integer.parseInt(request.getParameter("oid"));
             String shipAddress = request.getParameter("shipAddress");
-            Date shippedDate = Date.valueOf(request.getParameter("shippedDate"));
-            log(shipAddress);
+            String shippedDateStr = request.getParameter("shippedDate");
             String status = request.getParameter("status");
-            log(status);
+
+            if (shipAddress == null) {
+                shipAddress = "";
+            }
+            if (status == null) {
+                request.setAttribute("error", "Status cannot be null.");
+                request.getRequestDispatcher("/error.jsp").forward(request, response);
+                return;
+            }
+
             new OrderDAO().updateOrderShipAddress(oid, shipAddress);
             new OrderDAO().updateOrderStatus(oid, status);
-            new OrderDAO().updateOrderShippedDate(oid, shippedDate);
+
+            if (shippedDateStr != null && !shippedDateStr.isEmpty()) {
+                new OrderDAO().updateOrderShippedDate(oid, Date.valueOf(shippedDateStr));
+                request.setAttribute("shippedDate", shippedDateStr);
+            }
+
             request.setAttribute("shipAddress", shipAddress);
             request.setAttribute("status", status);
             request.setAttribute("success", "Updated successfully");
 
             HashMap<String, OrderDetail> list = new OrderDetailDAO().getOrderDetailsByOrderID(oid);
-
             if (list == null || list.isEmpty()) {
-                request.setAttribute("error", "list null or empty");
+                request.setAttribute("error", "Order details not found.");
                 request.getRequestDispatcher("/error.jsp").forward(request, response);
+                return;
             }
+
             Order o = new OrderDAO().getOrderByID(oid);
+            if (o == null) {
+                request.setAttribute("error", "Order not found.");
+                request.getRequestDispatcher("/error.jsp").forward(request, response);
+                return;
+            }
+
             double totalCost = new OrderDAO().getTotalCost(oid);
 
             request.setAttribute("freight", o.getFreight());
             request.setAttribute("totalCost", totalCost);
             request.setAttribute("shipAddress", o.getShipAddress());
-            request.setAttribute("shippedDate", o.getShippedDate());
             request.setAttribute("order", list);
 
             request.getRequestDispatcher("/update-order.jsp").forward(request, response);
+        } catch (NumberFormatException e) {
+            log("Invalid order ID format: " + e.getMessage());
+            request.setAttribute("error", "Invalid order ID");
+            request.getRequestDispatcher("/error.jsp").forward(request, response);
         } catch (Exception ex) {
-            log("run here");
-            log(ex.getMessage());
+            log("Error in doPost: " + ex.getMessage());
+            request.setAttribute("error", "Unexpected error");
+            request.getRequestDispatcher("/error.jsp").forward(request, response);
         }
     }
-
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
 
 }

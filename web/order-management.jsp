@@ -64,6 +64,10 @@
         <%@include file="shared/header.jsp" %>
         <h2 class="text-center mt-5">Orders Management</h2>
         <div class="container mt-4">
+            <div class="d-flex justify-content-end">
+                <a href="${pageContext.request.contextPath}/staff/viewreport">Create report</a>
+            </div>
+
             <%
                 HashMap<Integer, ArrayList<OrderDetail>> orders = (HashMap<Integer, ArrayList<OrderDetail>>) request.getAttribute("orders");
                 if (orders != null) {

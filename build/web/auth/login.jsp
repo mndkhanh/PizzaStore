@@ -39,7 +39,7 @@
 
                             <!-- Sign Up Link -->
                             <p class="text-center mt-3">
-                                Don't have an account? <a href="signup.jsp">Sign Up</a>
+                                Don't have an account? <a href="${pageContext.request.contextPath}/auth/signup.jsp">Sign Up</a>
                             </p>
 
                         </div>
