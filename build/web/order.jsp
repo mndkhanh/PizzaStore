@@ -112,33 +112,39 @@
 
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
             <script>
-//                const orderID = document.querySelector("#orderID").value;
                 const currentStatus = "${status}";
                 const oid = "${orderID}";
                 const rootProject = "${pageContext.request.contextPath}";
                 const urlApi = rootProject + "/user/checkpaymentstatus?oid=" + oid;
                 console.log(urlApi);
+
+                let intervalId;
+
                 function checkPaymentStatus() {
                     fetch(urlApi)
-                            .then(response => {
-                                console.log(response);
-                                return response.json();
-                            })
+                            .then(response => response.json())
                             .then(data => {
                                 console.log(data);
                                 const status = data.status;
                                 const isDataChangedToPaid = data.isDataChangedToPaid;
+
                                 if (status === "PAID" && isDataChangedToPaid === "YES") {
-                                    alert("Successully complete payment. Please reload to see updation!");
+                                    clearInterval(intervalId);
+                                    alert("Successfully completed payment. Please reload to see updates!");
+                                    window.location.href = rootProject + "/user/vieworder?oid=" + oid;
+                                } else if (status === "FAILED") {
+                                    clearInterval(intervalId);
+                                    alert("There was an error completing the payment.");
                                     window.location.href = rootProject + "/user/vieworder?oid=" + oid;
                                 }
                             })
-                            .catch(error => console.error('Error when trying to fetch data payments: ', error));
+                            .catch(error => console.error("Error fetching payment status: ", error));
                 }
 
                 if (currentStatus === "UNPAID") {
-                    setInterval(checkPaymentStatus, 2000);
+                    intervalId = setInterval(checkPaymentStatus, 2000);
                 }
+
 
             </script>
         </body>

@@ -13,7 +13,7 @@
     </head>
     <body>
         <%@include file="shared/header.jsp" %>
-        <div style="margin-top: 100px; margin-bottom: 150px; min-height: 65vh">
+        <div style="margin-top: 50px; margin-bottom: 150px;">
             <%@include  file="shared/viewProductList.jsp" %>
         </div>
         <%@include file="shared/footer.jsp" %> 

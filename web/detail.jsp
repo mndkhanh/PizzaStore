@@ -8,7 +8,6 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
         <style>
             .result-box {
-                height: 100vh;
                 margin-top: 50px;
             }
             .product-img {
@@ -51,6 +50,8 @@
                 <% }%>
             </div>
         </div>
-        <%@include file="shared/footer.jsp" %>
+            <div style="margin-top: 400px">
+                <%@include file="shared/footer.jsp" %>
+            </div>
     </body>
 </html>
